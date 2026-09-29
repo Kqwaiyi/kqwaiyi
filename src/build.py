@@ -11,8 +11,8 @@ from theme import MEDIA, THEMES, TYPE, W, b64, star, style, svg, write
 PROFILE = {
     "name": "Steven",
     "tagline": ["Aspiring software engineer,", "learning one star at a time."],
-    "enrolled": "Jul 2020",
-    "currently": "Building Companix",
+    "full_name": "Steven Fernando Goenawan",
+    "focus": "Full-stack web development",
     "stack": ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Python", "Git"],
 }
 
@@ -95,7 +95,7 @@ def banner(t, mode):
 def card(t, mode):
     H = 300
     px, py, pw, ph = 32, 88, 148, 180
-    col1, col2 = 212, 420
+    col1 = 212
 
     # chips wrap onto a second row; the last row sits flush with the photo
     chips, x, y = [], col1, 196
@@ -122,13 +122,11 @@ def card(t, mode):
 </g>
 <rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="16" fill="none" stroke="{t['primary']}" stroke-width="1.5"/>
 <text x="{col1}" y="104" class="t-small c-muted">Name</text>
-<text x="{col1}" y="126" class="t-body c-ink">{PROFILE['name']}</text>
-<text x="{col1}" y="152" class="t-small c-muted">Enrolled</text>
-<text x="{col1}" y="174" class="t-body c-ink">{PROFILE['enrolled']}</text>
-<text x="{col2}" y="152" class="t-small c-muted">Currently</text>
-<text x="{col2}" y="174" class="t-body c-ink">{PROFILE['currently']}</text>
+<text x="{col1}" y="126" class="t-body c-ink">{PROFILE['full_name']}</text>
+<text x="{col1}" y="152" class="t-small c-muted">Focus</text>
+<text x="{col1}" y="174" class="t-body c-ink">{PROFILE['focus']}</text>
 {''.join(chips)}"""
-    return svg(W, H, body, f"Student ID — {PROFILE['name']}")
+    return svg(W, H, body, f"Student ID — {PROFILE['full_name']}")
 
 
 # ---------------------------------------------------------------- footer
