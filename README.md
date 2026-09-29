@@ -1,16 +1,21 @@
-## Hi there 👋
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+  <img src="assets/banner-light.svg" alt="Kqwaiyi — making games with Godot, one star at a time" width="100%">
+</picture>
 
-<!--
-**Kqwaiyi/kqwaiyi** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+<a href="https://github.com/Kqwaiyi/Companix">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/card-dark.svg">
+    <img src="assets/card-light.svg" alt="Student ID — Kqwaiyi, enrolled Jul 2020, building Companix with Godot, GDScript, JavaScript and HTML" width="100%">
+  </picture>
+</a>
 
-Here are some ideas to get you started:
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/stars-dark.svg">
+  <img src="assets/stars-light.svg" alt="Star chart of contributions in the past year" width="100%">
+</picture>
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg">
+  <img src="assets/footer-light.svg" alt="Itsuki peeking — see you in the next commit" width="100%">
+</picture>
