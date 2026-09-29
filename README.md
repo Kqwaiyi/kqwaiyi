@@ -1,11 +1,11 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-  <img src="assets/banner-light.svg" alt="Steven — aspiring software engineer, learning one star at a time" width="100%">
+  <img src="assets/banner-light.svg" alt="Steven — 2nd year Software Engineering student, aspiring software engineer" width="100%">
 </picture>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/card-dark.svg">
-  <img src="assets/card-light.svg" alt="Student ID — Steven Fernando Goenawan, focused on full-stack web development; stack: HTML, CSS, JavaScript, TypeScript, React, Python and Git" width="100%">
+  <img src="assets/card-light.svg" alt="Personal Info — Steven Fernando Goenawan, focused on full-stack web development, hobbies: Valorant (Immortal rank) and piano; stack: HTML, CSS, JavaScript, TypeScript, React, Python and Git" width="100%">
 </picture>
 
 <picture>

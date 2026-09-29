@@ -10,9 +10,10 @@ from theme import MEDIA, THEMES, TYPE, W, b64, star, style, svg, write
 
 PROFILE = {
     "name": "Steven",
-    "tagline": ["Aspiring software engineer,", "learning one star at a time."],
+    "tagline": ["2nd Year Software Engineering Student,", "Aspiring Software Engineer."],
     "full_name": "Steven Fernando Goenawan",
     "focus": "Full-stack web development",
+    "hobbies": "Valorant — Immortal, Piano",
     "stack": ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Python", "Git"],
 }
 
@@ -96,6 +97,7 @@ def card(t, mode):
     H = 300
     px, py, pw, ph = 32, 88, 148, 180
     col1 = 212
+    col2 = round(col1 + text_width(PROFILE["focus"], "body") + 48)
 
     # chips wrap onto a second row; the last row sits flush with the photo
     chips, x, y = [], col1, 196
@@ -114,7 +116,7 @@ def card(t, mode):
 <defs><clipPath id="photo"><rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="16"/></clipPath></defs>
 <rect x=".75" y=".75" width="{W - 1.5}" height="{H - 1.5}" rx="24" class="c-bg" stroke="{t['line']}" stroke-width="1.5"/>
 {star(38, 40, 6, t['star'])}
-<text x="54" y="44" class="t-small c-deep">Student ID</text>
+<text x="54" y="44" class="t-small c-deep">Personal Info</text>
 <line x1="32" y1="64" x2="{W - 32}" y2="64" stroke="{t['line']}" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
 <g clip-path="url(#photo)">
   <rect x="{px}" y="{py}" width="{pw}" height="{ph}" class="c-surface"/>
@@ -125,8 +127,10 @@ def card(t, mode):
 <text x="{col1}" y="126" class="t-body c-ink">{PROFILE['full_name']}</text>
 <text x="{col1}" y="152" class="t-small c-muted">Focus</text>
 <text x="{col1}" y="174" class="t-body c-ink">{PROFILE['focus']}</text>
+<text x="{col2}" y="152" class="t-small c-muted">Hobbies</text>
+<text x="{col2}" y="174" class="t-body c-ink">{PROFILE['hobbies']}</text>
 {''.join(chips)}"""
-    return svg(W, H, body, f"Student ID — {PROFILE['full_name']}")
+    return svg(W, H, body, f"Personal Info — {PROFILE['full_name']}")
 
 
 # ---------------------------------------------------------------- footer

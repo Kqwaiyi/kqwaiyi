@@ -25,7 +25,7 @@
   <rect x="56" y="140" width="32" height="4" rx="2" class="c-primary"/>
   <text x="56" y="176" class="t-small c-deep">Hello, I'm</text>
   <text x="52" y="236" class="t-display c-ink">Steven</text>
-  <text x="56" y="276" class="t-body c-muted">Aspiring software engineer,</text>
-  <text x="56" y="300" class="t-body c-muted">learning one star at a time.</text>
+  <text x="56" y="276" class="t-body c-muted">2nd Year Software Engineering Student,</text>
+  <text x="56" y="300" class="t-body c-muted">Aspiring Software Engineer.</text>
 </g>
 <rect x=".75" y=".75" width="838.5" height="438.5" rx="27.25" fill="none" stroke="#4A2D33" stroke-width="1.5"/></svg>
