@@ -1,4 +1,4 @@
-"""Star chart: every day with contributions becomes a star, joined into a constellation.
+"""Star chart: every day with contributions becomes a star.
 
 Standard library only, so the daily workflow needs no installs.
 """
@@ -48,12 +48,6 @@ def chart(days, t, mode):
         f'<circle cx="{center(d)[0]:.1f}" cy="{center(d)[1]:.1f}" r="1.3" class="c-muted" opacity=".3"/>'
         for d in days if not d["level"]
     )
-    line = " ".join(f"{x:.1f},{y:.1f}" for x, y in map(center, lit))
-    constellation = (
-        f'<polyline points="{line}" fill="none" stroke="{t["primary"]}" stroke-opacity=".45" '
-        f'stroke-width="1" stroke-dasharray="3 4" stroke-linecap="round" stroke-linejoin="round"/>'
-        if len(lit) > 1 else ""
-    )
     stars = ""
     for i, d in enumerate(lit):
         x, y = center(d)
@@ -67,19 +61,18 @@ def chart(days, t, mode):
         if seen is not None and m != seen and d["col"] < 51:
             months += (
                 f'<text x="{GRID_X + d["col"] * CELL}" y="{GRID_Y + 7 * CELL + 24}" '
-                f'class="t-label c-muted">{d["date"].strftime("%b").upper()}</text>'
+                f'class="t-small c-muted">{d["date"].strftime("%b")}</text>'
             )
         seen = m
 
     title = f"{total:,} star{'s' if total != 1 else ''} collected"
-    body = f"""{style(t, (500, 700), extra)}
+    body = f"""{style(t, extra=extra)}
 <rect x=".75" y=".75" width="{W - 1.5}" height="{H - 1.5}" rx="24" class="c-bg" stroke="{t['line']}" stroke-width="1.5"/>
 {star(38, 40, 6, t['star'])}
-<text x="54" y="44" class="t-label c-deep">STAR CHART</text>
-<text x="{W - 32}" y="44" text-anchor="end" class="t-label c-muted">星図</text>
-<text x="32" y="80" class="t-title c-ink">{title}</text>
+<text x="54" y="44" class="t-small c-deep">Star Chart</text>
+<text x="32" y="80" class="t-body c-ink">{title}</text>
 <text x="{W - 32}" y="80" text-anchor="end" class="t-small c-muted">{len(lit)} bright days in the past year</text>
-{dust}{constellation}{stars}{months}"""
+{dust}{stars}{months}"""
     return svg(W, H, body, f"Star chart — {title}")
 
 

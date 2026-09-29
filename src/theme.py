@@ -14,13 +14,12 @@ W = 840
 
 FONT = "'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', sans-serif"
 
-# Type scale: (size px, weight, letter-spacing px). Nothing else is used.
+# Type scale: (size px, weight). Exactly three sizes; hierarchy comes from
+# color (ink > deep > muted), never from extra sizes or uppercase.
 TYPE = {
-    "display": (56, 900, 0),   # profile name in the banner
-    "title": (24, 700, 0),     # card titles and key values
-    "body": (16, 500, 0),      # running text
-    "small": (13, 500, 0),     # secondary text, chips
-    "label": (11, 700, 2.2),   # uppercase eyebrow labels
+    "display": (56, 900),   # profile name in the banner
+    "body": (16, 500),      # titles, values and running text
+    "small": (13, 500),     # labels, captions, chips
 }
 
 THEMES = {
@@ -51,15 +50,15 @@ def b64(path):
     return base64.b64encode(Path(path).read_bytes()).decode()
 
 
-def style(t, weights=(500, 700), extra=""):
+def style(t, weights=(500,), extra=""):
     faces = "".join(
         f"@font-face{{font-family:'Zen Maru Gothic';font-weight:{w};"
         f"src:url(data:font/woff2;base64,{b64(MEDIA / f'zen-maru-{w}.woff2')}) format('woff2');}}"
         for w in weights
     )
     types = "".join(
-        f".t-{name}{{font-family:{FONT};font-size:{s}px;font-weight:{wt};letter-spacing:{ls}px;}}"
-        for name, (s, wt, ls) in TYPE.items()
+        f".t-{name}{{font-family:{FONT};font-size:{s}px;font-weight:{wt};}}"
+        for name, (s, wt) in TYPE.items()
     )
     colors = "".join(f".c-{k}{{fill:{v};}}" for k, v in t.items())
     motion = "@media (prefers-reduced-motion:reduce){*{animation:none!important;}}"

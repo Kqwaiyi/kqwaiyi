@@ -9,36 +9,31 @@ from fontTools.ttLib import TTFont
 from theme import MEDIA, THEMES, TYPE, W, b64, star, style, svg, write
 
 PROFILE = {
-    "name": "Kqwaiyi",
-    "tagline": ["Making games with Godot,", "one star at a time."],
+    "name": "Steven",
+    "tagline": ["Aspiring software engineer,", "learning one star at a time."],
     "enrolled": "Jul 2020",
     "currently": "Building Companix",
-    "stack": ["Godot", "GDScript", "JavaScript", "HTML"],
+    "stack": ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Python", "Git"],
 }
+
+ICONS = {"HTML": "html5"}  # Simple Icons slug when it isn't just the lowercased name
 
 _fonts = {}
 
 
 def text_width(text, kind):
-    size, weight, ls = TYPE[kind]
+    size, weight = TYPE[kind]
     if weight not in _fonts:
         _fonts[weight] = TTFont(MEDIA / f"zen-maru-{weight}.woff2")
     f = _fonts[weight]
     cmap, hmtx = f.getBestCmap(), f["hmtx"]
     upm = f["head"].unitsPerEm
     units = sum(hmtx[cmap[ord(ch)]][0] for ch in text if ord(ch) in cmap)
-    return units * size / upm + ls * len(text)
+    return units * size / upm
 
 
 def icon(name, x, y, size, fill):
-    if name == "GDScript":  # no brand mark exists; a quiet code glyph instead
-        s = size / 24
-        return (
-            f'<g transform="translate({x},{y}) scale({s})" fill="none" stroke="{fill}" '
-            f'stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'
-            f'<path d="M8 6l-6 6 6 6M16 6l6 6-6 6M13.5 4l-3 16"/></g>'
-        )
-    file = {"Godot": "godotengine", "JavaScript": "javascript", "HTML": "html5"}[name]
+    file = ICONS.get(name, name.lower())
     d = re.search(r'd="([^"]+)"', (MEDIA / "icons" / f"{file}.svg").read_text()).group(1)
     return f'<path transform="translate({x},{y}) scale({size / 24})" fill="{fill}" d="{d}"/>'
 
@@ -61,7 +56,7 @@ def banner(t, mode):
     tw = "".join(
         star(x, y, r, t["star"], "tw", f'style="animation-delay:{d}s"') for x, y, r, d in stars
     )
-    body = f"""{style(t, (500, 700, 900), extra)}
+    body = f"""{style(t, (500, 900), extra)}
 <defs>
   <clipPath id="frame"><rect width="{W}" height="{H}" rx="28"/></clipPath>
   <radialGradient id="glow" cx="{face[0]}" cy="{face[1] + 40}" r="300" gradientUnits="userSpaceOnUse">
@@ -86,14 +81,13 @@ def banner(t, mode):
   <image x="{img_x}" y="0" width="{img_w}" height="{img_h}" href="data:image/webp;base64,{b64(MEDIA / 'itsuki-banner.webp')}"/>
   {tw}
   <rect x="56" y="140" width="32" height="4" rx="2" class="c-primary"/>
-  <text x="56" y="176" class="t-label c-deep">HELLO, I'M</text>
+  <text x="56" y="176" class="t-small c-deep">Hello, I'm</text>
   <text x="52" y="236" class="t-display c-ink">{PROFILE['name']}</text>
   <text x="56" y="276" class="t-body c-muted">{PROFILE['tagline'][0]}</text>
   <text x="56" y="300" class="t-body c-muted">{PROFILE['tagline'][1]}</text>
-  <text x="56" y="{H - 44}" class="t-label c-muted">NO.05 · 中野五月</text>
 </g>
 <rect x=".75" y=".75" width="{W - 1.5}" height="{H - 1.5}" rx="27.25" fill="none" stroke="{t['line']}" stroke-width="1.5"/>"""
-    return svg(W, H, body, "Kqwaiyi — Itsuki Nakano banner")
+    return svg(W, H, body, f"{PROFILE['name']} — Itsuki Nakano banner")
 
 
 # ---------------------------------------------------------------- ID card
@@ -103,45 +97,38 @@ def card(t, mode):
     px, py, pw, ph = 32, 88, 148, 180
     col1, col2 = 212, 420
 
-    chips, x = [], col1
+    # chips wrap onto a second row; the last row sits flush with the photo
+    chips, x, y = [], col1, 196
     for name in PROFILE["stack"]:
         w = round(14 + 16 + 8 + text_width(name, "small") + 16)
+        if x + w > W - 32:
+            x, y = col1, y + 40
         chips.append(
-            f'<rect x="{x}" y="236" width="{w}" height="32" rx="16" class="c-surface" stroke="{t["line"]}"/>'
-            + icon(name, x + 14, 244, 16, t["primary"])
-            + f'<text x="{x + 38}" y="256.5" class="t-small c-ink">{name}</text>'
+            f'<rect x="{x}" y="{y}" width="{w}" height="32" rx="16" class="c-surface" stroke="{t["line"]}"/>'
+            + icon(name, x + 14, y + 8, 16, t["primary"])
+            + f'<text x="{x + 38}" y="{y + 20.5}" class="t-small c-ink">{name}</text>'
         )
         x += w + 8
 
-    seal_x, seal_y = 744, 150
-    head_w = text_width("STUDENT ID", "label")
-    body = f"""{style(t, (500, 700))}
+    body = f"""{style(t)}
 <defs><clipPath id="photo"><rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="16"/></clipPath></defs>
 <rect x=".75" y=".75" width="{W - 1.5}" height="{H - 1.5}" rx="24" class="c-bg" stroke="{t['line']}" stroke-width="1.5"/>
 {star(38, 40, 6, t['star'])}
-<text x="54" y="44" class="t-label c-deep">STUDENT ID</text>
-<text x="{54 + head_w + 8}" y="44" class="t-small c-muted">学生証</text>
-<text x="{W - 32}" y="44" text-anchor="end" class="t-label c-muted">NO. 2020-05</text>
+<text x="54" y="44" class="t-small c-deep">Student ID</text>
 <line x1="32" y1="64" x2="{W - 32}" y2="64" stroke="{t['line']}" stroke-width="1.5" stroke-dasharray="2 6" stroke-linecap="round"/>
 <g clip-path="url(#photo)">
   <rect x="{px}" y="{py}" width="{pw}" height="{ph}" class="c-surface"/>
   <image x="{px - 16}" y="{py}" width="{ph}" height="{ph}" preserveAspectRatio="xMidYMid slice" href="data:image/webp;base64,{b64(MEDIA / 'itsuki-card.webp')}"/>
 </g>
 <rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="16" fill="none" stroke="{t['primary']}" stroke-width="1.5"/>
-<text x="{col1}" y="104" class="t-label c-muted">NAME</text>
-<text x="{col1}" y="136" class="t-title c-ink">{PROFILE['name']}</text>
-<text x="{col1}" y="176" class="t-label c-muted">ENROLLED</text>
-<text x="{col1}" y="200" class="t-body c-ink">{PROFILE['enrolled']}</text>
-<text x="{col2}" y="176" class="t-label c-muted">CURRENTLY</text>
-<text x="{col2}" y="200" class="t-body c-ink">{PROFILE['currently']}</text>
-{''.join(chips)}
-<g transform="rotate(-12 {seal_x} {seal_y})" opacity=".9">
-  <circle cx="{seal_x}" cy="{seal_y}" r="46" fill="none" stroke="{t['primary']}" stroke-width="3"/>
-  <circle cx="{seal_x}" cy="{seal_y}" r="39" fill="none" stroke="{t['primary']}" stroke-width="1"/>
-  <text x="{seal_x}" y="{seal_y - 4}" text-anchor="middle" class="t-title c-primary">五</text>
-  <text x="{seal_x}" y="{seal_y + 22}" text-anchor="middle" class="t-title c-primary">月</text>
-</g>"""
-    return svg(W, H, body, "Student ID — Kqwaiyi")
+<text x="{col1}" y="104" class="t-small c-muted">Name</text>
+<text x="{col1}" y="126" class="t-body c-ink">{PROFILE['name']}</text>
+<text x="{col1}" y="152" class="t-small c-muted">Enrolled</text>
+<text x="{col1}" y="174" class="t-body c-ink">{PROFILE['enrolled']}</text>
+<text x="{col2}" y="152" class="t-small c-muted">Currently</text>
+<text x="{col2}" y="174" class="t-body c-ink">{PROFILE['currently']}</text>
+{''.join(chips)}"""
+    return svg(W, H, body, f"Student ID — {PROFILE['name']}")
 
 
 # ---------------------------------------------------------------- footer
