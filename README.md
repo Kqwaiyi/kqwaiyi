@@ -12,8 +12,3 @@
   <source media="(prefers-color-scheme: dark)" srcset="assets/stars-dark.svg">
   <img src="assets/stars-light.svg" alt="Star chart of contributions in the past year" width="100%">
 </picture>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/footer-dark.svg">
-  <img src="assets/footer-light.svg" alt="Itsuki peeking — see you in the next commit" width="100%">
-</picture>

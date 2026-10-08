@@ -1,4 +1,4 @@
-"""Builds the static README art: banner, Personal Info and footer.
+"""Builds the static README art: banner and Personal Info.
 
 Nothing sits in a panel: every block draws straight onto GitHub's own page,
 and the facts are labelled stars joined into constellations.
@@ -129,28 +129,8 @@ def card(t, mode):
     return svg(W, H, style(t) + "".join(out), f"Personal Info — {PROFILE['full_name']}")
 
 
-# ---------------------------------------------------------------- footer
-
-def footer(t, mode):
-    H = 210
-    pw = 200
-    ph = round(523 * pw / 540)
-    extra = TWINKLE + "@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}.peek{animation:bob 4s ease-in-out infinite;}"
-    a, b = (W / 2 - 170, 52), (W / 2 + 170, 52)
-    body = f"""{style(t, (500,), extra)}
-<defs><clipPath id="edge"><rect width="{W}" height="{H}"/></clipPath>{fade_mask("sink", H - 30, H)}</defs>
-{link(t, [a, (W / 2 - 112, 52)], ".5")}{link(t, [(W / 2 + 112, 52), b], ".5")}
-{twinkles(t, [(*a, 6, 0), (*b, 6, 1.4)])}
-<text x="{W / 2}" y="57" text-anchor="middle" class="t-small c-muted">see you in the next commit</text>
-<g clip-path="url(#edge)" mask="url(#sink)"><g class="peek">
-  <image x="{(W - pw) / 2}" y="{H - 168}" width="{pw}" height="{ph}" href="{image('itsuki-peek.webp')}"/>
-</g></g>"""
-    return svg(W, H, body, "Itsuki waving goodbye")
-
-
 if __name__ == "__main__":
     for mode, t in THEMES.items():
         write(f"banner-{mode}.svg", banner(t, mode))
         write(f"card-{mode}.svg", card(t, mode))
-        write(f"footer-{mode}.svg", footer(t, mode))
-    print("built banner, card, footer")
+    print("built banner, card")
